@@ -1,6 +1,6 @@
 #ignoramos ficheros temporales y de backup
 vim/.vimrc.swp
-vim/_temp
-vim/_backup
+vim/_temp/*
+vim/_backup/*
 #no queremos tener una copia en git, sino que los baje cada vez
 vim/bundle
