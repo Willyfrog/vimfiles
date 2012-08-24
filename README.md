@@ -1,14 +1,18 @@
-==Pasos para instalar==
-# clonar el repositorio
+#Requisitos
+vim 7 compilado con python
+si se usa bashrc, hace falta el script de bash-completion de git
+
+#Pasos para instalar
+## clonar el repositorio
    git clone git@github.com:Willyfrog/vimfiles.git
-# inicializar y descargar submodulos
+## inicializar y descargar submodulos
    git submodule init
    git submodule update
-# enlazar ficheros
+## enlazar ficheros
    ln -s ~/vimfiles/vim ~/.vim
    ln -s ~/vimfiles/vimrc ~/.vimrc
    ln -s ~/vimfiles/bashrc ~/.bashrc
-# abrir vim e ignorar los errores y warnings varios
-# instalar plugins
+## abrir vim e ignorar los errores y warnings varios
+## instalar plugins
    :BundleInstall
-# reiniciar vim
+## reiniciar vim
