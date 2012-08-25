@@ -25,6 +25,8 @@ Bundle 'klen/python-mode'
 Bundle 'python.vim'
 Bundle 'python_match.vim'
 Bundle 'pythoncomplete'
+" Scala
+Bundle 'derekwyatt/vim-scala'
 " solarized
 Bundle 'altercation/vim-colors-solarized'
 " varios colores
@@ -100,3 +102,6 @@ nnoremap <silent> <leader>gp :Git push<CR>
 set t_Co=256
 set background=dark
 colorscheme xoria256
+
+"eclim
+filetype plugin indent on
