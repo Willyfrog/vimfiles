@@ -103,5 +103,7 @@ set t_Co=256
 set background=dark
 colorscheme xoria256
 
+set guioptions-=T
+
 "eclim
 filetype plugin indent on
