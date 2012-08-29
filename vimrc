@@ -97,6 +97,7 @@ nnoremap <silent> <leader>gb :Gblame<CR>
 nnoremap <silent> <leader>gl :Glog<CR>
 nnoremap <silent> <leader>gp :Git push<CR>
 
+let g:pymode_breakpoint_key='<leader>B'
 "Colores
 "256 colores
 set t_Co=256
