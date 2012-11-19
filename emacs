@@ -43,6 +43,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-enabled-themes (quote (wombat)))
+ '(inhibit-startup-screen t)
  '(show-paren-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -53,11 +54,16 @@
 
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
+(add-to-list 'load-path "/usr/share/emacs/scala-mode")
+(require 'scala-mode)
+(require 'clojure-mode)
+
 (setq auto-mode-alist
       (append
        '(("\\.py$" . python-mode)  ;; default python para .py
 	 ("\\.php$" . php-mode)   ;; default php para .php
-     ("\\.scala$".scala-mode)) ;; scala
+     ("\\.scala$" . scala-mode) ;; scala
+     ("\\.clj$" . clojure-mode)) ;; clojure
        auto-mode-alist))
 
 
@@ -82,3 +88,9 @@
 (require 'yasnippet) ;; not yasnippet-bundle"
 (yas/global-mode 1) ;; or manually load it with yas-global-mode"
 (put 'upcase-region 'disabled nil)
+
+(add-to-list 'load-path "/usr/share/ensime/elisp")
+(add-to-list 'exec-path "/usr/share/ensime")
+(require 'ensime)
+(add-hook 'scala-mode-hook 'ensime-scala-mode-hook) ;; load ensime when scala does
+(put 'downcase-region 'disabled nil)
