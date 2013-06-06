@@ -49,6 +49,7 @@
 (add-hook 'python-mode-hook 'jedi:setup)
 (add-hook 'clojure-mode-hook 'paredit-mode)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+(add-hook 'nrepl-mode-hook 'paredit-mode)
 
 (setq-default indent-tabs-mode nil) ;; usa espacios en vez de tabuladores
 (setq default-tab-width 4)          ;; 4 espacios por tab
@@ -59,3 +60,8 @@
 (setq twittering-use-master-password t)
 
 (require 'iso-transl) ;; habilitar acentos
+(put 'scroll-left 'disabled nil)
+
+;; shift+direction moves to that window
+(when (fboundp 'windmove-default-keybindings)
+      (windmove-default-keybindings))
