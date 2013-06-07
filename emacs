@@ -43,13 +43,28 @@
       ("\\.clj" . clojure-mode)
       ("\\.html" . html-mode)
       ("\\.rst" . rst-mode)
+      ("\\.inc$" . php-mode)
     auto-mode-alist)))
+
+;; funcion propia para convertir a 4 espacios
+(defun my-php-mode-hook ()
+  "My PHP mode configuration. http://stackoverflow.com/questions/12254982/emacs-php-indentation"
+  (setq indent-tabs-mode nil
+        tab-width 4
+        c-basic-offset 4)
+  (setq case-fold-search t))
+  ;;(setq fill-column 78)
+  ;;(c-set-offset 'arglist-cont 0)
+  ;;(c-set-offset 'arglist-intro '+)
+  ;;(c-set-offset 'case-label 2)
+  ;;(c-set-offset 'arglist-close 0))
 
 ;; hooks para cargar cosas extra con los modes
 (add-hook 'python-mode-hook 'jedi:setup)
 (add-hook 'clojure-mode-hook 'paredit-mode)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 (add-hook 'nrepl-mode-hook 'paredit-mode)
+(add-hook 'php-mode-hook 'my-php-mode-hook)
 
 (setq-default indent-tabs-mode nil) ;; usa espacios en vez de tabuladores
 (setq default-tab-width 4)          ;; 4 espacios por tab
@@ -65,3 +80,9 @@
 ;; shift+direction moves to that window
 (when (fboundp 'windmove-default-keybindings)
       (windmove-default-keybindings))
+
+;; php lint
+(defun php-lint-file ()
+       (interactive)
+       (compile (format "php -l %s" (buffer-file-name))))
+;; end of php lint
