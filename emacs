@@ -51,12 +51,13 @@
   "My PHP mode configuration. http://stackoverflow.com/questions/12254982/emacs-php-indentation"
   (setq indent-tabs-mode nil
         tab-width 4
+        c-default-style "linux"
         c-basic-offset 4)
-  (setq case-fold-search t))
+  (setq case-fold-search t)
   ;;(setq fill-column 78)
   ;;(c-set-offset 'arglist-cont 0)
   ;;(c-set-offset 'arglist-intro '+)
-  ;;(c-set-offset 'case-label 2)
+  (c-set-offset 'case-label 4))
   ;;(c-set-offset 'arglist-close 0))
 
 ;; hooks para cargar cosas extra con los modes
@@ -67,7 +68,7 @@
 (add-hook 'php-mode-hook 'my-php-mode-hook)
 
 (setq-default indent-tabs-mode nil) ;; usa espacios en vez de tabuladores
-(setq default-tab-width 4)          ;; 4 espacios por tab
+(setq tab-width 4)          ;; 4 espacios por tab
 
 (require 'auto-complete)          ;; probamos la carga de autocompletado
 (global-auto-complete-mode t)
