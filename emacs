@@ -23,6 +23,8 @@
          paredit
          popup
          python-mode
+         js3-mode
+         jedi
          smart-operator)))
 
 (el-get 'sync my-el-get-packages)
