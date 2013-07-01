@@ -1,0 +1,66 @@
+#
+# These things are run when an Openbox X Session is started.
+# You may place a similar script in $HOME/.config/openbox/autostart
+# to run user-specific things.
+#
+
+# If you want to use GNOME config tools...
+#
+#if test -x /usr/lib/openbox/gnome-settings-daemon >/dev/null; then
+#  /usr/lib/openbox/gnome-settings-daemon &
+#elif which gnome-settings-daemon >/dev/null 2>&1; then
+#  gnome-settings-daemon &
+#fi
+
+cairo-compmgr &
+
+# If you want to use XFCE config tools...
+#
+#xfce-mcs-manager &
+
+## Start session manager
+#lxsession &
+
+## Enable power management
+xfce4-power-manager &
+
+## Start Thunar Daemon
+thunar --daemon &
+
+## Set desktop wallpaper
+nitrogen --restore &
+
+## Launch panel
+tint2 &
+
+## Enable Eyecandy - off by default, uncomment one of the commands below.
+## Note: cairo-compmgr prefers a sleep delay, else it tends to produce
+## odd shadows/quirks around tint2 & Conky.
+#(sleep 10s && cb-compmgr --cairo-compmgr) &
+#cb-compmgr --xcompmgr & 
+
+## Launch network manager applet
+#(sleep 4s && nm-applet) &
+
+## Detect and configure touchpad. See 'man synclient' for more info.
+if egrep -iq 'touchpad' /proc/bus/input/devices; then
+    synclient VertEdgeScroll=1 &
+    synclient TapButton1=1 &
+fi
+
+## Start xscreensaver
+xscreensaver -no-splash &
+
+## Start Conky after a slight delay
+(sleep 3s && conky -q) &
+
+## Start volumeicon after a slight delay
+(sleep 3s && volumeicon) &
+
+## Start Clipboard manager
+(sleep 3s && parcellite) &
+
+(sleep 4s && launchy) &
+
+
+
