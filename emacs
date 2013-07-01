@@ -17,15 +17,24 @@
        '(auto-complete 
          autopair
          clojure-mode
+         cl-lib
+         deferred
+         jedi
+         js3-mode
          json
          magit
          nrepl
          paredit
+         php-mode-improved
+         pkgbuild-mode
          popup
          python-mode
-         js3-mode
-         jedi
-         smart-operator)))
+         rst-mode
+         smart-operator
+         smarty-mode
+         twittering-mode
+         virtualenv
+         )))
 
 (el-get 'sync my-el-get-packages)
 
