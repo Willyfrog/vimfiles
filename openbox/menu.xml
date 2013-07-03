@@ -245,9 +245,9 @@
 			</item>
 		</menu>
 		<separator/>
-		<menu id="recent" label="Recent Files" execute="~/.config/openbox/pipemenus/recently_opened_menu.sh" />
-		<menu id="places" label="Places" execute="~/.config/openbox/pipemenus/dash_places_menu.sh ~" />
-		<menu execute="cb-dropbox-pipemenu" id="dropbox" label="Dropbox"/>
+		<menu id="recent" label="Recent Files" execute="sh ~/.config/openbox/pipemenus/recently_opened_menu.sh" />
+		<menu id="places" label="Places" execute="sh ~/.config/openbox/pipemenus/dash_places_menu.sh ~" />
+		<!-- <menu execute="cb-dropbox-pipemenu" id="dropbox" label="Dropbox"/> -->
 		<separator/>
 		<menu id="settings" label="Settings">
 			<menu id="CompositeSettingsMenu" label="Compositing">
@@ -452,7 +452,7 @@
 			<item label="Choose Wallpaper">
 				<action name="Execute">
 					<execute>
-						nitrogen ~/images/wallpapers/
+						nitrogen
 					</execute>
 				</action>
 			</item>
