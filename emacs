@@ -38,6 +38,12 @@
 
 (el-get 'sync my-el-get-packages)
 
+;; org-mode
+(require 'org-install)
+(define-key global-map "\C-cl" 'org-store-link)
+(define-key global-map "\C-ca" 'org-agenda)
+(setq org-log-done t)
+
 ;; apply some configuration for Mac OS X only
 (if (string-equal system-type "darwin")
     (progn 
@@ -69,7 +75,9 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
  '(custom-enabled-themes (quote (wombat)))
- '(inhibit-startup-screen t))
+ '(inhibit-startup-screen t)
+ '(safe-local-variable-values (quote ((virtualenv-default-directory . "~/Proyectos/gigas_api") (virtualenv-workon . "api"))))
+ '(send-mail-function (quote sendmail-send-it)))
 
 ;;No tool bar mode
 (tool-bar-mode -1)
@@ -92,6 +100,9 @@
 (add-to-list 'auto-mode-alist '("\\.clj\\'" . clojure-mode))
 (add-to-list 'auto-mode-alist '("\\.html\\'" . html-mode))
 (add-to-list 'auto-mode-alist '("\\.hy\\'" . hy-mode))
+(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+(add-to-list 'auto-mode-alist '("\\emacs\\'" . emacs-lisp-mode))
+(add-to-list 'auto-mode-alist '("\\.el\\'" . emacs-lisp-mode))
 
 ;; funcion propia para convertir a 4 espacios
 (defun my-php-mode-hook ()
@@ -109,11 +120,14 @@
 
 ;; hooks para cargar cosas extra con los modes
 (add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:setup-keys t)
+(setq jedi:complete-on-dot t)
 (add-hook 'clojure-mode-hook 'paredit-mode)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 (add-hook 'nrepl-mode-hook 'paredit-mode)
 (add-hook 'php-mode-hook 'my-php-mode-hook)
 (add-hook 'hy-mode-hook 'paredit-mode)
+(add-hook 'emacs-lisp-mode 'paredit-mode)
 
 (setq-default indent-tabs-mode nil) ;; usa espacios en vez de tabuladores
 (setq tab-width 4)          ;; 4 espacios por tab
