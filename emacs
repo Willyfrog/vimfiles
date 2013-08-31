@@ -77,7 +77,9 @@
  '(custom-enabled-themes (quote (wombat)))
  '(inhibit-startup-screen t)
  '(safe-local-variable-values (quote ((virtualenv-default-directory . "~/Proyectos/gigas_api") (virtualenv-workon . "api"))))
- '(send-mail-function (quote sendmail-send-it)))
+ '(send-mail-function (quote sendmail-send-it))
+ '(safe-local-variable-values (quote ((encoding . utf-8)))))
+
 
 ;;No tool bar mode
 (tool-bar-mode -1)
