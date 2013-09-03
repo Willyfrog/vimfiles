@@ -105,6 +105,9 @@
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 (add-to-list 'auto-mode-alist '("\\emacs\\'" . emacs-lisp-mode))
 (add-to-list 'auto-mode-alist '("\\.el\\'" . emacs-lisp-mode))
+(add-to-list 'auto-mode-alist '("\\.lisp\\'" . lisp-mode))
+(add-to-list 'auto-mode-alist '("\\.lsp\\'" . lisp-mode))
+(add-to-list 'auto-mode-alist '("\\.cl\\'" . lisp-mode))
 
 ;; funcion propia para convertir a 4 espacios
 (defun my-php-mode-hook ()
@@ -120,16 +123,29 @@
   (c-set-offset 'case-label 4))
   ;;(c-set-offset 'arglist-close 0))
 
+(defun my-common-lisp-mode-hook ()
+  (setq inferior-lisp-program "rlwrap sbcl")
+  (add-to-list 'load-path "/usr/share/emacs/site-lisp/slime/")
+  (require 'slime)
+  (slime-setup)
+  (paredit-mode)
+  )
+
+(defun my-python-mode-hook ()
+  (jedi:setup)
+  (setq jedi:setup-keys t)
+  (setq jedi:complete-on-dot t)
+  )
+
 ;; hooks para cargar cosas extra con los modes
-(add-hook 'python-mode-hook 'jedi:setup)
-(setq jedi:setup-keys t)
-(setq jedi:complete-on-dot t)
+(add-hook 'python-mode-hook 'my-python-mode-hook)
 (add-hook 'clojure-mode-hook 'paredit-mode)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 (add-hook 'nrepl-mode-hook 'paredit-mode)
 (add-hook 'php-mode-hook 'my-php-mode-hook)
 (add-hook 'hy-mode-hook 'paredit-mode)
-(add-hook 'emacs-lisp-mode 'paredit-mode)
+(add-hook 'emacs-lisp-mode-hook 'paredit-mode)
+(add-hook 'lisp-mode-hook 'my-common-lisp-mode-hook)
 
 (setq-default indent-tabs-mode nil) ;; usa espacios en vez de tabuladores
 (setq tab-width 4)          ;; 4 espacios por tab
@@ -160,3 +176,6 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "Inconsolata" :foundry "unknown" :slant normal :weight normal :height 98 :width normal)))))
 
+;; my custom functions
+(add-to-list 'load-path "~/vimfiles/emacs_custom/")
+(load "kill_project_buffers")
