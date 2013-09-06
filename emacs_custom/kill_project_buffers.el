@@ -16,3 +16,20 @@
         (message ("User cancelled"))
         )
     )))
+
+(defun reset-project-buffers (partial-path)
+  "Reverts all buffers which contains partial-path"
+  (let ((revert-list (filter-buffers-by-file-name partial-path)))
+    (if (null revert-list)
+        (message (format "No buffers matched '%s'" partial-path))
+      (if (y-or-n-p (format "revert %d buffers?" (length revert-list)))
+          (progn
+            (dolist (buff revert-list)
+              (with-current-buffer buff
+                (revert-buffer t t t)
+                ))
+            (message (format "Reverted %d buffers: '%s'" (length revert-list) (mapcar 'buffer-name)))
+            )
+        (message ("User cancelled"))
+        )
+      )))
