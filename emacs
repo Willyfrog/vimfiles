@@ -76,9 +76,10 @@
  '(ansi-color-names-vector ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
  '(custom-enabled-themes (quote (wombat)))
  '(inhibit-startup-screen t)
- '(safe-local-variable-values (quote ((virtualenv-default-directory . "~/Proyectos/gigas_api") (virtualenv-workon . "api"))))
+ '(safe-local-variable-values (quote ((virtualenv-default-directory . "~/Proyectos/gigas_api") (virtualenv-workon . "api") (encoding . utf-8))))
  '(send-mail-function (quote sendmail-send-it))
- '(safe-local-variable-values (quote ((encoding . utf-8)))))
+ '(show-paren-mode t)
+ '(tool-bar-mode nil))
 
 
 ;;No tool bar mode
@@ -135,6 +136,10 @@
   (jedi:setup)
   (setq jedi:setup-keys t)
   (setq jedi:complete-on-dot t)
+  (setq py-shell-switch-buffers-on-execute-p t)
+  (setq py-switch-buffers-on-execute-p t)
+  (setq py-split-windows-on-execute-p nil)
+  (setq py-smart-indentation t)
   )
 
 ;; hooks para cargar cosas extra con los modes
@@ -169,13 +174,13 @@
        (interactive)
        (compile (format "php -l %s" (buffer-file-name))))
 ;; end of php lint
+
+;; my custom functions
+(add-to-list 'load-path "~/vimfiles/emacs_custom/")
+(load "kill_project_buffers")
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Inconsolata" :foundry "unknown" :slant normal :weight normal :height 98 :width normal)))))
-
-;; my custom functions
-(add-to-list 'load-path "~/vimfiles/emacs_custom/")
-(load "kill_project_buffers")
+ '(default ((t (:family "DejaVu Sans Mono" :foundry "unknown" :slant normal :weight normal :height 98 :width normal)))))
