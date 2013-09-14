@@ -1,3 +1,14 @@
+;;; package --- Summary
+;;
+;; .emacs de Guillermo Vayá Pérez guivaya@gmail.com @Driadan
+;;
+;;; Commentary: 
+;;
+;; This config file can be copied and modified. 
+;; No need to ask for permission or mention author.
+;;
+;;; Code:
+
 (add-to-list 'load-path "~/.emacs.d/hy-mode")
 (require 'hy-mode)
 
@@ -135,13 +146,14 @@
 (defun my-python-mode-hook ()
   (jedi:setup)
   (setq jedi:setup-keys t)
-  (setq jedi:complete-on-dot t)
+  (setq jedi:complete-on-dot t)2
   (setq py-shell-switch-buffers-on-execute-p t)
   (setq py-switch-buffers-on-execute-p t)
   (setq py-split-windows-on-execute-p nil)
   (setq py-smart-indentation t)
   )
-
+;; flycheck
+(add-hook 'after-init-hook #'global-flycheck-mode)
 ;; hooks para cargar cosas extra con los modes
 (add-hook 'python-mode-hook 'my-python-mode-hook)
 (add-hook 'clojure-mode-hook 'paredit-mode)
@@ -171,6 +183,7 @@
 
 ;; php lint
 (defun php-lint-file ()
+  "Lint php files."
        (interactive)
        (compile (format "php -l %s" (buffer-file-name))))
 ;; end of php lint
@@ -184,3 +197,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "DejaVu Sans Mono" :foundry "unknown" :slant normal :weight normal :height 98 :width normal)))))
+
+(provide 'emacs)
+;;; emacs ends here
