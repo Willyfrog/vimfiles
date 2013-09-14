@@ -45,6 +45,7 @@
          smarty-mode
          twittering-mode
          virtualenv
+         fill-column-indicator
          )))
 
 (el-get 'sync my-el-get-packages)
@@ -123,7 +124,7 @@
 
 ;; funcion propia para convertir a 4 espacios
 (defun my-php-mode-hook ()
-  "My PHP mode configuration. http://stackoverflow.com/questions/12254982/emacs-php-indentation"
+  "My PHP mode configuration.  http://stackoverflow.com/questions/12254982/emacs-php-indentation ."
   (setq indent-tabs-mode nil
         tab-width 4
         c-default-style "linux"
@@ -136,6 +137,7 @@
   ;;(c-set-offset 'arglist-close 0))
 
 (defun my-common-lisp-mode-hook ()
+  "Common lisp configuration."
   (setq inferior-lisp-program "rlwrap sbcl")
   (add-to-list 'load-path "/usr/share/emacs/site-lisp/slime/")
   (require 'slime)
@@ -144,6 +146,7 @@
   )
 
 (defun my-python-mode-hook ()
+  "Python configuration."
   (jedi:setup)
   (setq jedi:setup-keys t)
   (setq jedi:complete-on-dot t)2
@@ -187,6 +190,16 @@
        (interactive)
        (compile (format "php -l %s" (buffer-file-name))))
 ;; end of php lint
+
+;; linea para marcar el ancho que debería mantener
+(require 'fill-column-indicator)
+(define-globalized-minor-mode
+  global-fci-mode fci-mode (lambda () (fci-mode 1)))
+(global-fci-mode t)
+(setq fci-rule-colum 80)
+(setq fci-rule-color "darkblue")
+(setq fci-use-dashes t)
+
 
 ;; my custom functions
 (add-to-list 'load-path "~/vimfiles/emacs_custom/")
