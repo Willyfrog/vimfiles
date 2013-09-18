@@ -156,7 +156,7 @@
   (setq py-smart-indentation t)
   )
 ;; flycheck
-(add-hook 'after-init-hook #'global-flycheck-mode)
+;; (add-hook 'after-init-hook #'global-flycheck-mode)
 ;; hooks para cargar cosas extra con los modes
 (add-hook 'python-mode-hook 'my-python-mode-hook)
 (add-hook 'clojure-mode-hook 'paredit-mode)
