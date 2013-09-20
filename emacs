@@ -191,14 +191,15 @@
        (compile (format "php -l %s" (buffer-file-name))))
 ;; end of php lint
 
+;; para que fci este a 80
+(setq-default fill-column 80)
+
 ;; linea para marcar el ancho que debería mantener
 (require 'fill-column-indicator)
 (define-globalized-minor-mode
   global-fci-mode fci-mode (lambda () (fci-mode 1)))
 (global-fci-mode t)
-(setq fci-rule-colum 80)
 (setq fci-rule-color "darkblue")
-(setq fci-use-dashes t)
 
 
 ;; my custom functions
