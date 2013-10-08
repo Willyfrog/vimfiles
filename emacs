@@ -36,10 +36,9 @@
          magit
          nrepl
          paredit
-         php-mode-improved
+         php-mode
          pkgbuild-mode
          popup
-         python-mode
          rst-mode
          smart-operator
          smarty-mode
@@ -123,6 +122,7 @@
 (add-to-list 'auto-mode-alist '("\\.cl\\'" . lisp-mode))
 
 ;; funcion propia para convertir a 4 espacios
+(require 'php-mode)
 (defun my-php-mode-hook ()
   "My PHP mode configuration.  http://stackoverflow.com/questions/12254982/emacs-php-indentation ."
   (setq indent-tabs-mode nil
@@ -133,7 +133,17 @@
   ;;(setq fill-column 78)
   ;;(c-set-offset 'arglist-cont 0)
   ;;(c-set-offset 'arglist-intro '+)
-  (c-set-offset 'case-label 4))
+  (set (make-local-variable 'compile-command)
+       (format "phpcs --report=emacs --standard=PSR2 %s"
+               (buffer-file-name)))
+  (require 'flyphpcs)
+  (setq fly/phpcs-phpcs-dir "/usr/bin")
+  (setq fly/phpcs-phpcs-phpinc "/usr/include/php")
+  (setq fly/phpcs-phpexe "/usr/bin/php")
+  (setq fly/phpcs-standard "PSR2")
+  (c-set-offset 'case-label 4)
+  (setq fill-column 120)
+  )
   ;;(c-set-offset 'arglist-close 0))
 
 (defun my-common-lisp-mode-hook ()
@@ -147,9 +157,9 @@
 
 (defun my-python-mode-hook ()
   "Python configuration."
-  (jedi:setup)
-  (setq jedi:setup-keys t)
-  (setq jedi:complete-on-dot t)2
+  ;; (jedi:setup)
+  ;; (setq jedi:setup-keys t)
+  ;; (setq jedi:complete-on-dot t)2
   (setq py-shell-switch-buffers-on-execute-p t)
   (setq py-switch-buffers-on-execute-p t)
   (setq py-split-windows-on-execute-p nil)
@@ -210,7 +220,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "DejaVu Sans Mono" :foundry "unknown" :slant normal :weight normal :height 98 :width normal)))))
+ '(default ((t (:family "Anonymous Pro" :foundry "unknown" :slant normal :weight normal :height 113 :width normal)))))
 
 (provide 'emacs)
 ;;; emacs ends here
