@@ -13,6 +13,7 @@
 (require 'hy-mode)
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+(add-to-list 'load-path "~/.emacs.d/el-get/elpa")
 
 (unless (require 'el-get nil 'noerror)
   (with-current-buffer
@@ -48,6 +49,13 @@
          )))
 
 (el-get 'sync my-el-get-packages)
+
+;; non el-get
+(require 'package)
+(package-initialize)
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")
+                         ("melpa" . "http://melpa.milkbox.net/packages/")))
 
 ;; org-mode
 (require 'org-install)
@@ -85,11 +93,11 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
- '(custom-enabled-themes (quote (wombat)))
+ '(custom-enabled-themes (quote (adwaita)))
+ '(custom-safe-themes (quote ("5dfacaf380068d9ed06e0872a066a305ab6a1217f25c3457b640e76c98ae20e6" default)))
  '(inhibit-startup-screen t)
  '(safe-local-variable-values (quote ((virtualenv-default-directory . "~/Proyectos/gigas_api") (virtualenv-workon . "api") (encoding . utf-8))))
  '(send-mail-function (quote sendmail-send-it))
- '(show-paren-mode t)
  '(tool-bar-mode nil))
 
 
@@ -157,16 +165,17 @@
 
 (defun my-python-mode-hook ()
   "Python configuration."
-  ;; (jedi:setup)
-  ;; (setq jedi:setup-keys t)
-  ;; (setq jedi:complete-on-dot t)2
+  (jedi:setup)
+  (setq jedi:setup-keys t)
+  (setq jedi:complete-on-dot t)2
   (setq py-shell-switch-buffers-on-execute-p t)
   (setq py-switch-buffers-on-execute-p t)
   (setq py-split-windows-on-execute-p nil)
-  (setq py-smart-indentation t)
-  )
+  (setq py-smart-indentation t))
+
 ;; flycheck
-;; (add-hook 'after-init-hook #'global-flycheck-mode)
+;;(add-hook 'after-init-hook #'global-flycheck-mode)
+
 ;; hooks para cargar cosas extra con los modes
 (add-hook 'python-mode-hook 'my-python-mode-hook)
 (add-hook 'clojure-mode-hook 'paredit-mode)
@@ -222,5 +231,6 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "Anonymous Pro" :foundry "unknown" :slant normal :weight normal :height 113 :width normal)))))
 
+(load-theme 'ample-zen t)
 (provide 'emacs)
 ;;; emacs ends here
