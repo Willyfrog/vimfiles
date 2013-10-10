@@ -210,6 +210,10 @@
        (compile (format "php -l %s" (buffer-file-name))))
 ;; end of php lint
 
+;; yasnippets
+(require 'yasnippet) ;; not yasnippet-bundle
+(yas-global-mode 1)
+
 ;; para que fci este a 80
 (setq-default fill-column 80)
 
