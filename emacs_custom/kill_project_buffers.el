@@ -24,7 +24,7 @@
     (if (null kill-list)
         (message (format "No buffers matched '%s'" partial-path))
       (if (y-or-n-p (format "Killing %d buffers.  Continue? " (length kill-list)))
-        (kill-some-buffers kill-list)
+        (mapcar 'kill-buffer  kill-list)
         (message "User cancelled")
         )
     )))

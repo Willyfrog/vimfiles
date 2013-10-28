@@ -93,7 +93,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
- '(custom-enabled-themes (quote (adwaita)))
+ '(custom-enabled-themes (quote (ample-zen)))
  '(custom-safe-themes (quote ("5dfacaf380068d9ed06e0872a066a305ab6a1217f25c3457b640e76c98ae20e6" default)))
  '(inhibit-startup-screen t)
  '(safe-local-variable-values (quote ((virtualenv-default-directory . "~/Proyectos/gigas_api") (virtualenv-workon . "api") (encoding . utf-8))))
@@ -156,7 +156,8 @@
 
 (defun my-common-lisp-mode-hook ()
   "Common lisp configuration."
-  (setq inferior-lisp-program "rlwrap sbcl")
+  ;;(setq inferior-lisp-program "rlwrap sbcl")
+  (setq inferior-lisp-program "sbcl")
   (add-to-list 'load-path "/usr/share/emacs/site-lisp/slime/")
   (require 'slime)
   (slime-setup)
@@ -211,7 +212,7 @@
 ;; end of php lint
 
 ;; yasnippets
-(require 'yasnippet) ;; not yasnippet-bundle
+;;(require 'yasnippet) ;; not yasnippet-bundle
 (yas-global-mode 1)
 
 ;; para que fci este a 80
