@@ -31,6 +31,7 @@
          clojure-mode
          cl-lib
          deferred
+         fill-column-indicator
          jedi
          js3-mode
          json
@@ -45,7 +46,7 @@
          smarty-mode
          twittering-mode
          virtualenv
-         fill-column-indicator
+         web-mode
          yasnippet
          yasnippet-config
          )))
