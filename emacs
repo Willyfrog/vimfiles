@@ -35,7 +35,7 @@
          js3-mode
          json
          magit
-         nrepl
+         nREPL
          paredit
          php-mode
          pkgbuild-mode
@@ -46,9 +46,11 @@
          twittering-mode
          virtualenv
          fill-column-indicator
+         yasnippet
+         yasnippet-config
          )))
 
-(el-get 'sync my-el-get-packages)
+(el-get 'sync my-el-get-packages) ;; descomentar para instalar
 
 ;; non el-get
 (require 'package)
@@ -92,13 +94,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-names-vector ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
- '(custom-enabled-themes (quote (ample-zen)))
- '(custom-safe-themes (quote ("5dfacaf380068d9ed06e0872a066a305ab6a1217f25c3457b640e76c98ae20e6" default)))
- '(inhibit-startup-screen t)
- '(safe-local-variable-values (quote ((virtualenv-default-directory . "~/Proyectos/gigas_api") (virtualenv-workon . "api") (encoding . utf-8))))
- '(send-mail-function (quote sendmail-send-it))
- '(tool-bar-mode nil))
+ '(fringe-mode 10 nil (fringe)))
 
 
 ;;No tool bar mode
@@ -112,6 +108,8 @@
 ;;Parentesis
 (show-paren-mode 1)
 (setq show-paren-delay 0)
+(display-battery-mode t)
+(setq inhibit-startup-message t)
 
 ;; set major modes
 (add-to-list 'auto-mode-alist '("\\.php\\'" . php-mode))
@@ -144,7 +142,7 @@
   (set (make-local-variable 'compile-command)
        (format "phpcs --report=emacs --standard=PSR2 %s"
                (buffer-file-name)))
-  (require 'flyphpcs)
+  ;(require 'flyphpcs)
   (setq fly/phpcs-phpcs-dir "/usr/bin")
   (setq fly/phpcs-phpcs-phpinc "/usr/include/php")
   (setq fly/phpcs-phpexe "/usr/bin/php")
@@ -166,9 +164,12 @@
 
 (defun my-python-mode-hook ()
   "Python configuration."
-  (jedi:setup)
-  (setq jedi:setup-keys t)
-  (setq jedi:complete-on-dot t)2
+  ;; (jedi:setup)
+  ;; (setq jedi:server-args
+  ;;     '("--log" "python-epc.log"
+  ;;       "--log-level" "DEBUG"))
+  ;; (setq jedi:setup-keys t)
+  ;; (setq jedi:complete-on-dot t)
   (setq py-shell-switch-buffers-on-execute-p t)
   (setq py-switch-buffers-on-execute-p t)
   (setq py-split-windows-on-execute-p nil)
@@ -236,6 +237,6 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "Anonymous Pro" :foundry "unknown" :slant normal :weight normal :height 113 :width normal)))))
 
-(load-theme 'ample-zen t)
+(load-theme 'deeper-blue-mine t)
 (provide 'emacs)
 ;;; emacs ends here
