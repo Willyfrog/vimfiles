@@ -8,6 +8,7 @@
 ;; No need to ask for permission or mention author.
 ;;
 ;;; Code:
+(add-to-list 'load-suffixes ".el.gpg") ;; allow for encrypted .el files
 
 (add-to-list 'load-path "~/.emacs.d/hy-mode")
 (require 'hy-mode)
@@ -52,6 +53,7 @@
          )))
 
 (el-get 'sync my-el-get-packages) ;; descomentar para instalar
+(el-get 'sync)
 
 ;; non el-get
 (require 'package)
@@ -89,14 +91,6 @@
               (unless (getenv key)
                 (setenv key value))))
       ))
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(fringe-mode 10 nil (fringe)))
-
 
 ;;No tool bar mode
 (tool-bar-mode -1)
@@ -230,7 +224,8 @@
 
 ;; my custom functions
 (add-to-list 'load-path "~/vimfiles/emacs_custom/")
-(load "kill_project_buffers")
+(require 'kill_project_buffers)
+(require 'start_gtalk)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
