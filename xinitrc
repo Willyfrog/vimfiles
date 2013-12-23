@@ -8,7 +8,7 @@
 
 #exec openbox-session
 
-setxkbmap us intl
+setxkbmap -layout us -variant altgr-intl -option nodeadkeys
 setxkbmap -option "ctrl:nocaps"
 xrdb -merge .Xresources
 xrandr --output LVDS1 --left-of VGA1
