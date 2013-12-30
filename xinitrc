@@ -13,4 +13,5 @@ setxkbmap -option "ctrl:nocaps"
 xrdb -merge .Xresources
 xrandr --output LVDS1 --left-of VGA1
 xcompmgr &
+( ( sleep 10 && /usr/bin/xscreensaver -no-splash -display :0.0 ) & )
 exec /usr/bin/awesome
