@@ -14,7 +14,7 @@ import re
 class Theme(object):
     bar = dict(
          opacity=0.9,
-         background='1a1a1a'
+         background='131a13'
          )
 
     class Layout(object):
@@ -29,7 +29,7 @@ class Theme(object):
         default = dict(
                 padding=1,
                 fontsize=14,
-                font='Sans',
+                font='DejaVu Sans',
                 foreground='5CCCCC'
                 )
         group_box = dict(default.items() + dict(
@@ -95,7 +95,7 @@ screens = [
             widget.Sep(padding=10),
             widget.Systray(),
             widget.Clock(**Theme.Widget.clock),
-            widget.Notify(foreground='#ffff00')
+            #widget.Notify(foreground='#ffff00')
         ], 22, **Theme.bar)),
     Screen(top = bar.Bar(
         [
@@ -118,6 +118,7 @@ ctrl = "control"
 TERMINAL = "urxvt"
 EDITOR = "emacsclient -ca \"\""
 BROWSER = "google-chrome-stable"
+LOCKER = 'i3lock -i ~/Imágenes/starfiction.png -t'
 
 keys = [
 
@@ -170,7 +171,7 @@ keys = [
         lazy.spawn("amixer -c 0 -q set Master toggle")),
     Key([], 'XF86Calculator',        lazy.spawn('xcalc')),
     Key([mod], "XF86Calculator", 
-        lazy.spawn("xscreensaver-command -lock")),
+        lazy.spawn("xautolock -locknow")),
     Key([], "XF86MonBrightnessDown", lazy.spawn("xbacklight -dec 10")),
     Key([], "XF86MonBrightnessUp", lazy.spawn("xbacklight -inc 10")),
     #Key([], "XF86TouchpadToggle",   lazy.spawn("synclient TouchpadOff=$(synclient -l | grep -c 'TouchpadOff.*=.*0')")),
@@ -312,8 +313,8 @@ def startup():
     execute_once("nm-applet")
     #execute_once("xcaliber --bR=256 --bG=256 --bB=200 --gR=1.0 --gG=1.0 --gB=0.85")
     #execute_once("sudan")
-    #execute_once("xautolock -time 1 -locker screenlock")
-    execute_once("xscreensaver -no-splash")
+    execute_once("xautolock -time 5 -locker %s" % LOCKER)
+    #execute_once("xscreensaver -no-splash")
     #execute_once("nice -n 19 dropbox start")
     execute_once("nice -n 19 xrdb -merge ~/.Xresources")
     #execute_once("irssi_notifier")
