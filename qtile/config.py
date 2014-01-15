@@ -25,12 +25,12 @@ class Theme(object):
         )
 
     class Widget(object):
-        icons_path = '/user/share/icons/default'
+        icons_path = '~/.config/qtile/icons/'
         default = dict(
                 padding=1,
                 fontsize=14,
-                font='Tamsyn',
-                foreground='a0a0a0'
+                font='Sans',
+                foreground='5CCCCC'
                 )
         group_box = dict(default.items() + dict(
                 other_screen_border='880000',
@@ -44,10 +44,10 @@ class Theme(object):
                  backlight_name='intel_backlight'
                  ).items())
         volume = dict(default.items() + dict(
-                theme_path=icons_path
+                #theme_path=None #icons_path
                 ).items())
         battery_icon = dict(default.items() + dict(
-                #theme_path=icons_path,
+                theme_path=icons_path,
                 battery_name='BAT1'
                 ).items())
         battery = dict(default.items() + dict(
@@ -64,7 +64,7 @@ class Theme(object):
         #        location='Madrid, SP'
         #        ).items())
         clock = dict(default.items() + dict(
-                fmt='%d.%m.%Y | %H:%M',  #'%a, %d de %b, %H:%M',
+                fmt='%A %d %b | %H:%M',  #'%a, %d de %b, %H:%M',
                 fontsize=14,
                 padding=10
                 ).items())
@@ -85,6 +85,7 @@ screens = [
             widget.Sep(padding=10),
             widget.Prompt(**Theme.Widget.default),
             widget.WindowName(**Theme.Widget.window_name),
+            #widget.TaskList(),
             #       widget.Mpris(),
             #widget.Backlight(**Theme.Widget.backlight),
             widget.Volume(**Theme.Widget.volume),
@@ -306,15 +307,15 @@ def setup_screens():
 @hook.subscribe.startup
 def startup():
     execute_once("xbacklight -set 30")
-    #execute_once("xcompmgr")
+    execute_once("xcompmgr")
     execute_once("sh ~/.fehbg")
-    #execute_once("nm-applet")
+    execute_once("nm-applet")
     #execute_once("xcaliber --bR=256 --bG=256 --bB=200 --gR=1.0 --gG=1.0 --gB=0.85")
     #execute_once("sudan")
     #execute_once("xautolock -time 1 -locker screenlock")
-    execute_once("xscreensaver -no-logo")
+    execute_once("xscreensaver -no-splash")
     #execute_once("nice -n 19 dropbox start")
-    #execute_once("nice -n 19 xrdb -merge ~/.Xresources")
+    execute_once("nice -n 19 xrdb -merge ~/.Xresources")
     #execute_once("irssi_notifier")
     setup_screens()
 
