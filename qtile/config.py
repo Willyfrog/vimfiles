@@ -312,12 +312,10 @@ def startup():
     execute_once("sh ~/.fehbg")
     execute_once("nm-applet")
     #execute_once("xcaliber --bR=256 --bG=256 --bB=200 --gR=1.0 --gG=1.0 --gB=0.85")
-    #execute_once("sudan")
+    execute_once("dunst")
     execute_once("xautolock -time 5 -locker %s" % LOCKER)
-    #execute_once("xscreensaver -no-splash")
     #execute_once("nice -n 19 dropbox start")
     execute_once("nice -n 19 xrdb -merge ~/.Xresources")
-    #execute_once("irssi_notifier")
     setup_screens()
 
 
