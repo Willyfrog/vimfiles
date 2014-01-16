@@ -160,21 +160,18 @@ keys = [
     Key([mod, shift], "minus", lazy.layout.toggle_split()),
 
     # start specific apps
-#    Key([mod], "F1",              lazy.spawn("google-chrome")),
-#    Key([mod], "F2",              lazy.spawn("thunderbird")),
-#    Key([mod], "F3",              lazy.spawn("spotify")),
+    Key([mod], "F1",              lazy.spawn("google-chrome-stable")),
+    Key([mod], "F2",              lazy.spawn("firefox")),
+    Key([mod], "F3",              lazy.spawn("spotify")),
 #    Key([mod], "F4",              lazy.spawn("psi")),
 
     # Change the volume if your keyboard has special volume keys.
-    Key([], "XF86AudioRaiseVolume",
-        lazy.spawn("amixer -c 0 -q set Master 2dB+")),
-    Key([], "XF86AudioLowerVolume",
-        lazy.spawn("amixer -c 0 -q set Master 2dB-")),
-    Key([], "XF86AudioMute",
-        lazy.spawn("amixer -c 0 -q set Master toggle")),
-    Key([], 'XF86Calculator',        lazy.spawn('xcalc')),
-    Key([mod], "XF86Calculator", 
-        lazy.spawn("xautolock -locknow")),
+    Key([], "XF86AudioRaiseVolume", lazy.spawn("pulseaudio-ctl up")),
+    Key([], "XF86AudioLowerVolume", lazy.spawn("pulseaudio-ctl down")),
+    Key([], "XF86AudioMute", lazy.spawn("pulseaudio-ctl mute")),
+    Key([], 'XF86Calculator', lazy.spawn('xcalc')),
+    # win + calc => lock screen now
+    Key([mod], "XF86Calculator", lazy.spawn("xautolock -locknow")),
     Key([], "XF86MonBrightnessDown", lazy.spawn("xbacklight -dec 10")),
     Key([], "XF86MonBrightnessUp", lazy.spawn("xbacklight -inc 10")),
     #Key([], "XF86TouchpadToggle",   lazy.spawn("synclient TouchpadOff=$(synclient -l | grep -c 'TouchpadOff.*=.*0')")),
@@ -347,7 +344,7 @@ def gen_locker(time=5):
 
 def update_wallpaper(image_path):
     if path.exists(image_path):
-        execute_once("feh  --bg-scale %s" % image)
+        execute_once("feh  --bg-scale %s" % image_path)
     # TODO: log error
 
 @hook.subscribe.startup
