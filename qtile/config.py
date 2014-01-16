@@ -345,12 +345,15 @@ def gen_locker(time=5):
         lockerstring += " -c 131a13"
     return "xautolock -time %s -locker '%s'" % (time, lockerstring)
 
+def update_wallpaper(image_path):
+    if path.exists(image_path):
+        execute_once("feh  --bg-scale %s" % image)
+    # TODO: log error
 
 @hook.subscribe.startup
 def startup():
     execute_once("xbacklight -set 30")
     execute_once("xcompmgr")
-    execute_once("feh  --bg-scale %s" % WALLPAPER)
     execute_once("nm-applet")
     #execute_once("xcaliber --bR=256 --bG=256 --bB=200 --gR=1.0 --gG=1.0 --gB=0.85")
     execute_once("dunst")
@@ -358,9 +361,10 @@ def startup():
     #execute_once("nice -n 19 dropbox start")
     execute_once("nice -n 19 xrdb -merge %s" % path.expandvars("$HOME/.Xresources"))
     setup_screens()
-
+    update_wallpaper(WALLPAPER)
 
 @hook.subscribe.screen_change 
 def restart_on_screen_change(qtile, ev): 
     setup_screens()
+    update_wallpaper(WALLPAPER)
     qtile.cmd_restart() 
