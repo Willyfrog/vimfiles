@@ -7,6 +7,7 @@ from subprocess import Popen, check_output, PIPE, STDOUT
 from time import sleep
 from os import path
 import re
+import shlex
 
 
 ################################### SCREENS ####################################
@@ -25,7 +26,7 @@ class Theme(object):
         )
 
     class Widget(object):
-        icons_path = '~/.config/qtile/icons/'
+        icons_path = path.expandvars('$HOME/.config/qtile/icons/')
         default = dict(
                 padding=1,
                 fontsize=14,
@@ -44,7 +45,7 @@ class Theme(object):
                  backlight_name='intel_backlight'
                  ).items())
         volume = dict(default.items() + dict(
-                #theme_path=None #icons_path
+                theme_path=icons_path
                 ).items())
         battery_icon = dict(default.items() + dict(
                 theme_path=icons_path,
@@ -118,13 +119,9 @@ ctrl = "control"
 TERMINAL = "urxvt"
 EDITOR = "emacsclient -ca \"\""
 BROWSER = "google-chrome-stable"
-WALLPAPER = "~/.wallpaper"
-LOCKIMAGE = "~/.wallpaper-lock"
+WALLPAPER = path.expandvars("$HOME/.wallpaper")
+LOCKIMAGE = path.expandvars("$HOME/.wallpaper-lock")
 LOCKER = 'i3lock'
-if LOCKIMAGE and path.exists(LOCKIMAGE):
-    LOCKER += " -i %s -t" % LOCKIMAGE
-else:
-    LOCKER += " -c 131a13"
 
 keys = [
 
@@ -264,10 +261,10 @@ def is_running(process):
     return False
 
 
-def execute_once(process):
-    if not is_running(process):
-        return Popen(process.split())
-
+def execute_once(command):    
+    process = shlex.split(command)
+    if process and not is_running(process[0]):
+        return Popen(process)
 
 def cmd_get(process):
     return check_output("%s; exit 0;" % process, stderr=STDOUT, shell=True)
@@ -340,6 +337,14 @@ def setup_screens():
     #         "--output DP1 --off " +
     #         "--output VGA1 --off")
 
+def gen_locker(time=5):
+    lockerstring = LOCKER
+    if LOCKIMAGE and path.exists(LOCKIMAGE):
+        lockerstring += " -i %s -t" % LOCKIMAGE
+    else:
+        lockerstring += " -c 131a13"
+    return "xautolock -time %s -locker '%s'" % (time, lockerstring)
+
 
 @hook.subscribe.startup
 def startup():
@@ -349,9 +354,9 @@ def startup():
     execute_once("nm-applet")
     #execute_once("xcaliber --bR=256 --bG=256 --bB=200 --gR=1.0 --gG=1.0 --gB=0.85")
     execute_once("dunst")
-    execute_once("xautolock -time 5 -locker %s" % LOCKER)
+    execute_once(gen_locker())
     #execute_once("nice -n 19 dropbox start")
-    execute_once("nice -n 19 xrdb -merge ~/.Xresources")
+    execute_once("nice -n 19 xrdb -merge %s" % path.expandvars("$HOME/.Xresources"))
     setup_screens()
 
 
