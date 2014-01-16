@@ -277,20 +277,29 @@ def get_num_screens():
 
 def get_screens():
     lines = (line for line in cmd_get("xrandr | grep -A 1 \ connected").splitlines() if line != "--")
-    screens = [(screen.split()[0], resolution.split()[0]) for screen,resolution in zip(lines, lines)]
+    screens = {screen.split()[0]: resolution.split()[0] for screen,resolution in zip(lines, lines)}
     return screens
 
-def gen_screen_line(screen, resolution, position=None, primary=None):
-    s = "--output {screen} --mode {resolution} --rotate normal ".format(screen=screen, resolution=resolution)
-    if position:
-        s += "--pos {position} ".format(position=position)
-    if primary:
-        s += "--primary "
+def gen_screen_line(screen, resolution=None, position=None, primary=None):
+    s = "--output {screen} ".format(screen=screen)
+    if resolution:
+        s += "--mode {resolution} --rotate normal ".format(resolution=resolution)
+        if position:
+            s += "--pos {position} ".format(position=position)
+        if primary:
+            s += "--primary "
+    else:
+        s += " --off "
     return s
 
-def gen_xrand():
-    modes = [gen_screen_line(screen[0], screen[1]) for screen in get_screens()]
-    return "xrandr " + " ".join(modes)
+def gen_xrand(order="--left-of"):
+    modes = []
+    screen_port=["LVDS", "HDMI", "VGA", "DP"]
+    active_screens = get_screens()
+    for port in screen_port:
+        screen_name = "%s1" % port
+        modes.append(gen_screen_line(screen_name, active_screens.get(screen_name, None)))
+    return "xrandr " + (" {order} ".format(order=order)).join(modes)
 
 def setup_screens():    
     execute_once(gen_xrand())
