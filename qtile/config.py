@@ -118,7 +118,13 @@ ctrl = "control"
 TERMINAL = "urxvt"
 EDITOR = "emacsclient -ca \"\""
 BROWSER = "google-chrome-stable"
-LOCKER = 'i3lock -i ~/Imágenes/starfiction.png -t'
+WALLPAPER = "~/.wallpaper"
+LOCKIMAGE = "~/.wallpaper-lock"
+LOCKER = 'i3lock'
+if LOCKIMAGE and path.exists(LOCKIMAGE):
+    LOCKER += " -i %s -t" % LOCKIMAGE
+else:
+    LOCKER += " -c 131a13"
 
 keys = [
 
@@ -266,50 +272,71 @@ def execute_once(process):
 def cmd_get(process):
     return check_output("%s; exit 0;" % process, stderr=STDOUT, shell=True)
 
-def setup_screens():
-    num_screens = int(cmd_get("xrandr|grep -c \ connected"))
-    if num_screens == 1:
-        execute_once("xrandr " +
-        "--output HDMI1 --off " +
-        "--output LVDS1 --mode 1366x768 --pos 0x0 --rotate normal " +
-        "--output DP1 --off " +
-        "--output VGA1 --off")
-    else:
-        execute_once("xbacklight -set 100")
-        if bool(int(cmd_get("xrandr|grep -c \"VGA[0-9]* connected\""))):
-            execute_once("xrandr --output HDMI1 --off " + 
-                         "--output LVDS1 --mode 1366x768 --pos 0x232 --rotate normal " +
-                         "--output DP1 --off " +
-                         "--output VGA1 --primary --mode 1920x1080")
+def get_num_screens():
+    return int(cmd_get("xrandr|grep -c \ connected"))    
 
-            # execute_once("xrandr " +
-            # "--output HDMI1 --off " +
-            # "--output DP1 --off " +
-            # "--output VGA1 --primary --mode 1920x1080 --rotate normal --right-of " +
-            # "--output LVDS1 --mode 1366x768 --pos 0x0 --rotate normal --pos 277x1080")
-        elif bool(int(cmd_get("xrandr|grep -c \"HDMI[0-9]* connected\""))):
-            execute_once("xrandr --output VGA1 --off " + 
-                         "--output LVDS1 --mode 1366x768 --pos 0x232 --rotate normal " +
-                         "--output DP1 --off " +
-                         "--output HDMI1 --primary --mode 1920x1080")
-            # execute_once("xrandr " +
-            # "--output VGA1 --off " +
-            # "--output DP1 --off " +
-            # "--output HDMI1 --primary --mode 1920x1080 --rotate normal --right-of " +
-            # "--output LVDS1 --mode 1366x768 --pos 0x0 --rotate normal --pos 1920x312")
-        else:
-            execute_once("xrandr " +
-            "--output HDMI1 --off " +
-            "--output LVDS1 --mode 1366x768 --pos 0x0 --rotate normal " +
-            "--output DP1 --off " +
-            "--output VGA1 --off")
+def get_screens():
+    lines = (line for line in cmd_get("xrandr | grep -A 1 \ connected").splitlines() if line != "--")
+    screens = [(screen.split()[0], resolution.split()[0]) for screen,resolution in zip(lines, lines)]
+    return screens
+
+def gen_screen_line(screen, resolution, position=None, primary=None):
+    s = "--output {screen} --mode {resolution} --rotate normal ".format(screen=screen, resolution=resolution)
+    if position:
+        s += "--pos {position} ".format(position=position)
+    if primary:
+        s += "--primary "
+    return s
+
+def gen_xrand():
+    modes = [gen_screen_line(screen[0], screen[1]) for screen in get_screens()]
+    return "xrandr " + " ".join(modes)
+
+def setup_screens():    
+    execute_once(gen_xrand())
+
+    # if len(screens) == 1:
+    #     execute_once("xrandr " +
+    #     "--output HDMI1 --off " +
+    #     "--output LVDS1 --mode 1366x768 --pos 0x0 --rotate normal " +
+    #     "--output DP1 --off " +
+    #     "--output VGA1 --off")
+    # else:
+    #     execute_once("xbacklight -set 100")
+    #     if bool(int(cmd_get("xrandr|grep -c \"VGA[0-9]* connected\""))):
+    #         execute_once("xrandr --output HDMI1 --off " + 
+    #                      "--output LVDS1 --mode 1366x768 --pos 0x232 --rotate normal " +
+    #                      "--output DP1 --off " +
+    #                      "--output VGA1 --primary --mode 1920x1080")
+
+    #         # execute_once("xrandr " +
+    #         # "--output HDMI1 --off " +
+    #         # "--output DP1 --off " +
+    #         # "--output VGA1 --primary --mode 1920x1080 --rotate normal --right-of " +
+    #         # "--output LVDS1 --mode 1366x768 --pos 0x0 --rotate normal --pos 277x1080")
+    #     elif bool(int(cmd_get("xrandr|grep -c \"HDMI[0-9]* connected\""))):
+    #         execute_once("xrandr --output VGA1 --off " + 
+    #                      "--output LVDS1 --mode 1366x768 --pos 0x232 --rotate normal " +
+    #                      "--output DP1 --off " +
+    #                      "--output HDMI1 --primary --mode 1920x1080")
+    #         # execute_once("xrandr " +
+    #         # "--output VGA1 --off " +
+    #         # "--output DP1 --off " +
+    #         # "--output HDMI1 --primary --mode 1920x1080 --rotate normal --right-of " +
+    #         # "--output LVDS1 --mode 1366x768 --pos 0x0 --rotate normal --pos 1920x312")
+    #     else:
+    #         execute_once("xrandr " +
+    #         "--output HDMI1 --off " +
+    #         "--output LVDS1 --mode 1366x768 --pos 0x0 --rotate normal " +
+    #         "--output DP1 --off " +
+    #         "--output VGA1 --off")
 
 
 @hook.subscribe.startup
 def startup():
     execute_once("xbacklight -set 30")
     execute_once("xcompmgr")
-    execute_once("sh ~/.fehbg")
+    execute_once("feh  --bg-scale %s" % WALLPAPER)
     execute_once("nm-applet")
     #execute_once("xcaliber --bR=256 --bG=256 --bB=200 --gR=1.0 --gG=1.0 --gB=0.85")
     execute_once("dunst")
