@@ -271,7 +271,18 @@ def get_num_screens():
 
 def get_screens():
     lines = (line for line in cmd_get("xrandr | grep -A 1 \ connected").splitlines() if line != "--")
-    screens = {screen.split()[0]: resolution.split()[0] for screen,resolution in zip(lines, lines)}
+    screens = {}
+    got_primary = False
+    for screen, resolution in zip(lines, lines):
+        scr = screen.split()[0]
+        screens[scr] = {
+            "resolution": resolution.split()[0],
+            "screen": scr,
+        }
+        # first screen not being the laptop one gets to be the primary
+        if not got_primary and not scr.startswith("LVDS"):
+            screens[scr]["primary"] = True
+            got_primary = True
     return screens
 
 def gen_screen_line(screen, resolution=None, position=None, primary=None):
@@ -286,16 +297,19 @@ def gen_screen_line(screen, resolution=None, position=None, primary=None):
         s += " --off "
     return s
 
-def gen_xrand(order="--left-of"):
+def gen_xrand():
     modes = []
     screen_port=["LVDS", "HDMI", "VGA", "DP"]
     active_screens = get_screens()
     for port in screen_port:
         screen_name = "%s1" % port
-        modes.append(gen_screen_line(screen_name, active_screens.get(screen_name, None)))
-    return "xrandr " + (" {order} ".format(order=order)).join(modes)
+        screen = (active_screens.get(screen_name, None) or 
+                  {"screen": screen_name})
+        modes.append(gen_screen_line(**screen))
 
-def setup_screens():    
+    return "xrandr " + " ".join(modes)
+
+def setup_screens():
     execute_once(gen_xrand())
 
     # if len(screens) == 1:
