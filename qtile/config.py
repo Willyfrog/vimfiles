@@ -49,11 +49,11 @@ class Theme(object):
                 ).items())
         battery_icon = dict(default.items() + dict(
                 theme_path=icons_path,
-                battery_name='BAT1'
+                battery_name='BAT0'
                 ).items())
         battery = dict(default.items() + dict(
                 padding=0,
-                battery_name='BAT1',
+                battery_name='BAT0',
                 charge_char='',
                 discharge_char='',
                 energy_now_file='charge_now',
