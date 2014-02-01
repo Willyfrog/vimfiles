@@ -373,6 +373,7 @@ def startup():
     execute_once("nice -n 19 xrdb -merge %s" % path.expandvars("$HOME/.Xresources"))
     setup_screens()
     update_wallpaper(WALLPAPER)
+    execute_once("dropboxd")
 
 @hook.subscribe.screen_change 
 def restart_on_screen_change(qtile, ev): 
