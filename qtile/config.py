@@ -221,8 +221,12 @@ layouts = [
 ]
 
 # setting default auto flot types and float rules
-floating_layout = layout.Floating(auto_float_types = floating.DEFAULT_FLOAT_WM_TYPES,
-    float_rules = [dict(wmclass="spotify"),dict(wmclass="gnome-calculator"),dict(wname="Unlock Login Keyring")])
+floating_layout = layout.Floating(
+    auto_float_types = floating.DEFAULT_FLOAT_WM_TYPES,
+    float_rules = [dict(wmclass="pinentry"),            #emacs pass window
+                   dict(wmclass="Calculator"),          #Gnome Calculator
+                   dict(wmclass="Ediff"),               #emacs diff window
+                   dict(wname="Unlock Login Keyring")])
 
 # make dialog floating
 @hook.subscribe.client_new
