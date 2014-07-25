@@ -118,7 +118,8 @@ ctrl = "control"
 
 TERMINAL = "urxvt"
 EDITOR = "emacsclient -ca \"\""
-BROWSER = "google-chrome-stable"
+BROWSER = "firefox"
+FILEMANAGER = "pcmanfm"
 WALLPAPER = path.expandvars("$HOME/.wallpaper")
 LOCKIMAGE = path.expandvars("$HOME/.wallpaper-lock")
 LOCKER = 'i3lock'
@@ -160,8 +161,8 @@ keys = [
     Key([mod, shift], "minus", lazy.layout.toggle_split()),
 
     # start specific apps
-    Key([mod], "F1",              lazy.spawn("google-chrome-stable")),
-    Key([mod], "F2",              lazy.spawn("firefox")),
+    Key([mod], "F1",              lazy.spawn(BROWSER)),
+    Key([mod], "F2",              lazy.spawn(FILEMANAGER)),
     Key([mod], "F3",              lazy.spawn("spotify")),
 #    Key([mod], "F4",              lazy.spawn("psi")),
 
@@ -378,6 +379,7 @@ def startup():
     setup_screens()
     update_wallpaper(WALLPAPER)
     execute_once("dropboxd")
+    execute_once("seafile-applet")
 
 @hook.subscribe.screen_change 
 def restart_on_screen_change(qtile, ev): 
