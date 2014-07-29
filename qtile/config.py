@@ -88,7 +88,7 @@ screens = [
             widget.WindowName(**Theme.Widget.window_name),
             #widget.TaskList(),
             #       widget.Mpris(),
-            #widget.Backlight(**Theme.Widget.backlight),
+            widget.Backlight(**Theme.Widget.backlight),
             widget.Volume(**Theme.Widget.volume),
             widget.Sep(padding=10),
             widget.BatteryIcon(**Theme.Widget.battery_icon),
@@ -368,7 +368,7 @@ def update_wallpaper(image_path):
 
 @hook.subscribe.startup
 def startup():
-    execute_once("xbacklight -set 30")
+    execute_once("xbacklight -set 40")
     execute_once("xcompmgr")
     execute_once("nm-applet")
     #execute_once("xcaliber --bR=256 --bG=256 --bB=200 --gR=1.0 --gG=1.0 --gB=0.85")
