@@ -21,7 +21,7 @@ class Theme(object):
     class Layout(object):
         border_args = dict(
             border_normal='#000000',
-            border_focus='#000000',
+            border_focus='#550000',
             border_width=2,
         )
 
@@ -116,7 +116,7 @@ alt = "mod1"
 shift = "shift"
 ctrl = "control"
 
-TERMINAL = "urxvt"
+TERMINAL = "sakura"
 EDITOR = "emacsclient -ca \"\""
 BROWSER = "firefox"
 FILEMANAGER = "pcmanfm"
@@ -142,8 +142,8 @@ keys = [
     Key([mod, "shift"], "j", lazy.layout.shuffle_down()),  # Stack, xmonad-tall
     Key([mod], "Tab", lazy.layout.next()),
     Key([mod,shift], "Tab", lazy.layout.previous()),
-    Key([mod], "h", lazy.layout.previous()),
-    Key([mod], "l", lazy.layout.next()),
+    Key([mod], "p", lazy.layout.previous()),
+    Key([mod], "n", lazy.layout.next()),
     Key([mod, shift], "f", lazy.window.toggle_floating()),
     Key([mod, shift], "m", lazy.window.toggle_maximized()),
 
@@ -153,9 +153,10 @@ keys = [
     Key([mod], "Left", lazy.group.prevgroup()),
     Key([mod], "Right", lazy.group.nextgroup()),
 
-    Key([mod,shift], "Left", lazy.to_next_screen()),
-    Key([mod,shift], "Right", lazy.to_prev_screen()),
-
+    #Key([mod,shift], "Left", lazy.to_next_screen()),
+    #Key([mod,shift], "Right", lazy.to_prev_screen()),
+    Key([mod], "o", lazy.to_next_screen()),
+    #Key([mod,shift], "Right", lazy.to_prev_screen()),
 
     Key([mod, shift], "space", lazy.layout.rotate()),
     Key([mod, shift], "minus", lazy.layout.toggle_split()),
@@ -172,7 +173,7 @@ keys = [
     Key([], "XF86AudioMute", lazy.spawn("pulseaudio-ctl mute")),
     Key([], 'XF86Calculator', lazy.spawn('xcalc')),
     # win + calc => lock screen now
-    Key([mod], "XF86Calculator", lazy.spawn("xautolock -locknow")),
+    Key([mod], "l", lazy.spawn("xautolock -locknow")),
     Key([], "XF86MonBrightnessDown", lazy.spawn("xbacklight -dec 10")),
     Key([], "XF86MonBrightnessUp", lazy.spawn("xbacklight -inc 10")),
     #Key([], "XF86TouchpadToggle",   lazy.spawn("synclient TouchpadOff=$(synclient -l | grep -c 'TouchpadOff.*=.*0')")),
@@ -192,6 +193,16 @@ mouse = [
 
 ##################################  GROUPS  ####################################
 
+# groups = [
+#     ("1", Group("Terminal")),
+#     ("2", Group("Emacs")),
+#     ("3", Group("Browser")),
+#     ("4", Group("Irc")),
+#     ("5", Group("Talk")),
+#     ("6", Group("Music")),
+#     ("7", Group("Files")),
+#     ("8", Group("Other")),
+# ]
 groups = [
     Group("1"),
     Group("2"),
