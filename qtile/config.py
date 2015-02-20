@@ -33,25 +33,23 @@ class Theme(object):
                 font='DejaVu Sans',
                 foreground='5CCCCC'
                 )
-        group_box = dict(default.items() + dict(
+        group_box = dict(default, **dict(
                 other_screen_border='880000',
                 padding=3,
                 urgent_alert_method='text',
                 fontsize=12,
-                ).items())
-        window_name = dict(default.items() + dict(
-                ).items())
-        backlight = dict(default.items() + dict(
-                 backlight_name='intel_backlight'
-                 ).items())
-        volume = dict(default.items() + dict(
-                theme_path=icons_path
-                ).items())
-        battery_icon = dict(default.items() + dict(
-                theme_path=icons_path,
-                battery_name='BAT1'
-                ).items())
-        battery = dict(default.items() + dict(
+                ))
+        window_name = dict(default, **dict())
+        backlight = dict(default, **dict(
+            backlight_name='intel_backlight'))
+        volume = dict(default, **dict(
+            theme_path=icons_path
+        ))
+        battery_icon = dict(default, **dict(
+            theme_path=icons_path,
+            battery_name='BAT1'
+        ))
+        battery = dict(default, **dict(
                 padding=0,
                 battery_name='BAT1',
                 charge_char='',
@@ -60,20 +58,19 @@ class Theme(object):
                 energy_full_file='charge_full',
                 power_now_file='current_now',
                 update_delay=4
-                ).items())
-        #yahoo_weather = dict(default.items() + dict(
+                ))
+        # yahoo_weather = dict(default.items() + dict(
         #        location='Madrid, SP'
         #        ).items())
-        clock = dict(default.items() + dict(
-                fmt='%A %d %b | %H:%M',  #'%a, %d de %b, %H:%M',
-                fontsize=14,
-                padding=10
-                ).items())
-        current_layout = dict(default.items() + dict(
-                fontsize=12,
-                foreground='7070ff'
-                ).items())
-
+        clock = dict(default, **dict(
+            fmt='%A %d %b | %H:%M',  # '%a, %d de %b, %H:%M',
+            fontsize=14,
+            padding=10
+        ))
+        current_layout = dict(default, **dict(
+            fontsize=12,
+            foreground='7070ff'
+            ))
 
 ################################### SCREENS ####################################
 
@@ -127,14 +124,15 @@ LOCKER = 'i3lock'
 keys = [
 
     Key([shift, alt], "q", lazy.shutdown()),
-    Key([mod,shift], "r", lazy.restart()),
-    Key([mod,shift], "x", lazy.window.kill()),
+    Key([mod, shift], "r", lazy.restart()),
+    Key([mod, shift], "x", lazy.window.kill()),
 
-    Key([mod], "r", lazy.spawncmd()),
+    #Key([mod], "r", lazy.spawncmd()),
+    Key([mod], "r", lazy.spawn("gmrun &")),
     Key([mod], "g", lazy.switchgroup()),
 
     Key([mod], "Return", lazy.spawn(TERMINAL)),
-    Key([mod,shift], "Return", lazy.spawn(EDITOR)),
+    Key([mod, shift], "Return", lazy.spawn(EDITOR)),
 
     Key([mod], "k", lazy.layout.up()),
     Key([mod], "j", lazy.layout.down()),
@@ -269,7 +267,7 @@ def floating_dialogs(window):
 def is_running(process):
     s = Popen(["ps", "axuw"], stdout=PIPE)
     for x in s.stdout:
-        if re.search(process, x):
+        if re.search(process.encode(), x):
             return True
     return False
 
@@ -296,7 +294,7 @@ def get_screens():
             "screen": scr,
         }
         # first screen not being the laptop one gets to be the primary
-        if not got_primary and not scr.startswith("LVDS"):
+        if not got_primary and not scr.startswith(b"LVDS"):
             screens[scr]["primary"] = True
             got_primary = True
     return screens
@@ -389,7 +387,7 @@ def startup():
     execute_once("nice -n 19 xrdb -merge %s" % path.expandvars("$HOME/.Xresources"))
     setup_screens()
     update_wallpaper(WALLPAPER)
-    execute_once("dropboxd")
+    execute_once("dropbox")
     execute_once("seafile-applet")
 
 @hook.subscribe.screen_change 
